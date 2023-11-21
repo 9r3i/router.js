@@ -25,7 +25,7 @@ route using state
   <meta name="author" content="9r3i" />
   <meta name="uri" content="//github.com/9r3i" />
   <!-- router property -->
-  <script type="text/javascript" src="router-2.0.1.min.js"></script>
+  <script type="text/javascript" src="router.min.js"></script>
   <!-- inline style property -->
   <style type="text/css" media="screen,print"></style>
 </head><body>
