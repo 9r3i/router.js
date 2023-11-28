@@ -1,7 +1,7 @@
 /* router.js
  , ~ router for browser
  , authored by 9r3i
- * https://github.com/9r3i/router.js
+ , https://github.com/9r3i/router.js
  , started at october 24th 2018 - version 1.0.0 --> using hash
  , continued at october 4th 2019 - version 2.0.0 --> using pathname
  , continued at october 10th 2019 - version 2.0.1 --> fix query parsing
@@ -22,7 +22,7 @@
  */
 ;function router(path,globEnv,head,foot){
 /* router version */
-this.version='2.2.0';
+this.version='2.2.1';
 /* router basepath -- window.location.pathname */
 path=typeof path==='string'?path:'/';
 path=path.substr(0,1)!='/'?'/'+path:path;
@@ -184,7 +184,7 @@ this.__proto__.anchor=function(){
   /* parse them all */
   let _this=this;
   for(let i=0;i<ans.length;i++){
-    ans[i].onclick=function(e){
+    ans[i].addEventListener('click',function(e){
       /* prevent default action */
       e.preventDefault();
       /* get href attribute */
@@ -200,7 +200,7 @@ this.__proto__.anchor=function(){
       href=isBaseURL?href.substr(baseLength):href;
       /* then go */
       return _this.go(href);
-    };
+    },false);
   }return true;
 };
 /* initialize
