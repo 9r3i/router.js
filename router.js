@@ -1,12 +1,13 @@
 /* router.js
  , ~ router for browser
  , authored by 9r3i
- , https://github.com/9r3i
+ * https://github.com/9r3i/router.js
  , started at october 24th 2018 - version 1.0.0 --> using hash
  , continued at october 4th 2019 - version 2.0.0 --> using pathname
  , continued at october 10th 2019 - version 2.0.1 --> fix query parsing
  , continued at november 21st 2024 - version 2.0.2 --> fix comments
  , continued at november 22nd 2024 - version 2.1.0 --> fix method .replace to full eval all string inside the brackets
+ , continued at november 22nd 2024 - version 2.2.0 --> use event listener
  , @replacement global letiables:
  ,   --> _GLOBAL = object of global environment
  ,   --> _ROUTER = object of loaded router
@@ -21,7 +22,7 @@
  */
 ;function router(path,globEnv,head,foot){
 /* router version */
-this.version='2.1.1';
+this.version='2.2.0';
 /* router basepath -- window.location.pathname */
 path=typeof path==='string'?path:'/';
 path=path.substr(0,1)!='/'?'/'+path:path;
@@ -210,18 +211,10 @@ this.__proto__.anchor=function(){
 this.__proto__.init=function(){
   /* prepare this object */
   let _this=this;
-  /* using events.js */
-  if(window.hasOwnProperty('WINDOW_EVENTS')){
-    WINDOW_EVENTS.onpopstate.push(function(){
-      return _this.change();
-    });
-    WINDOW_EVENTS.execAll();
-  }else{
-    /* normal statement */
-    window.onpopstate=function(){
-      return _this.change();
-    };
-  }
+  /* use event listener */
+  window.addEventListener('popstate',e=>{
+    return _this.change();
+  },false);
   /* prepare object default */
   let path=window.location.pathname.substr(this.basepath.length),
   fullpath=path+window.location.search+window.location.hash;
