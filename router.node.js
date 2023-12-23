@@ -22,7 +22,7 @@
  */
 ;function router(path,globEnv,head,foot){
 /* router version */
-this.version='2.2.1';
+this.version='2.2.2';
 /* router basepath -- window.location.pathname */
 path=typeof path==='string'?path:'/';
 path=path.substr(0,1)!='/'?'/'+path:path;
@@ -191,8 +191,9 @@ this.__proto__.anchor=function(){
       let href=this.getAttribute('href');
       if(typeof href!=='string'){return false;}
       /* check href baseurl */
-      let baseLength=_this.baseurl.length;
-      let isBaseURL=href.substr(0,baseLength)===_this.baseurl?true:false;
+      let baseLength=_this.baseurl.length,
+      isBaseURL=href.substr(0,baseLength)===_this.baseurl
+        ?true:false;
       if(href.match(/^https?:\/\//i)&&!isBaseURL){
         return _this.go(href,true);
       }
@@ -368,16 +369,16 @@ this.__proto__.route=function(p){
  * @return: print out genetated error statement into document.body
  */
 this.__proto__.error=function(s,c){
-  let id='router-error-statement';
-  let n=document.getElementById(id);
-  if(n){n.parentElement.removeChild(n);}
+  let id='router-error-statement',
+  n=document.getElementById(id);
+  if(n){n.remove();}
   if(s===false){return false;}
   s=typeof s==='string'?s:'Unknown Error';
   c=c%1===0?c:200;
   n=document.createElement('div');
   n.id=id;
-  let sp=document.createElement('div');
-  let sd=document.createElement('div');
+  let sp=document.createElement('div'),
+  sd=document.createElement('div');
   n.style.margin='0px';
   n.style.padding='30px';
   n.style.textAlign='center';
@@ -413,12 +414,11 @@ this.__proto__.error=function(s,c){
  */
 this.__proto__.query=function(t){
   if(typeof t!=='string'){return false;}
-  let s=t.split('&');
-  let r={},c={};
+  let s=t.split('&'),r={},c={};
   for(let i=0;i<s.length;i++){
     if(!s[i]||s[i]==''){continue;}
-    let p=s[i].split('=');
-    let k=decodeURIComponent(p[0]);
+    let p=s[i].split('='),
+    k=decodeURIComponent(p[0]);
     if(k.match(/\[(.*)?\]$/g)){
       let l=k.replace(/\[(.*)?\]$/g,'');
       let w=k.replace(/^.*\[(.*)?\]$/g,"$1");
